@@ -2,14 +2,22 @@ import React, { useEffect } from "react";
 import { formatDate } from "../utils/helpers";
 import {
   useDeleteAllMutation,
+  useDeleteProductMutation,
   useLazyGetProductsQuery,
 } from "../store/supabase/supabase.api";
 import Button from "../components/ui/Button";
 import { IProduct } from "../modules";
+import styled from "styled-components";
+
+const Col = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 75px 10px;
+`;
 
 const Statistics = () => {
   const [getProducts, { data = [] }] = useLazyGetProductsQuery({});
   const [fetchDeleteAll] = useDeleteAllMutation();
+  const [fetchDelete] = useDeleteProductMutation();
 
   const formatData = data.reduce((acc, elem) => {
     const f = formatDate(new Date(elem?.date));
@@ -25,6 +33,15 @@ const Statistics = () => {
   useEffect(() => {
     getProducts("");
   }, []);
+
+  const handleDelete = async (elem: any) => {
+    try {
+      await fetchDelete(elem);
+      getProducts({});
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handlerDeleteAll = async () => {
     const allId = data.map((elem) => elem.id);
@@ -43,18 +60,19 @@ const Statistics = () => {
     <div className="flex flex-col gap-10">
       Statistics Page
       <ul>
-        <div className="w-[100%] grid grid-cols-2 border-b mb-2 p-2">
+        <Col className="w-[100%] border-b mb-2 p-2">
           <span>Product</span>
           <span>Status</span>
-        </div>
+          <span></span>
+        </Col>
 
         {Object.entries(formatData).map((elem) => (
           <div>
             <div className="underline">{elem[0]}</div>
             {elem[1].map((e) => (
-              <div
+              <Col
                 key={e.id}
-                className={`w-[100%] grid grid-cols-2  border-b p-2 ${
+                className={`w-[100%]  border-b p-2 ${
                   e.checked ? "bg-green-300" : undefined
                 }`}
               >
@@ -65,7 +83,14 @@ const Statistics = () => {
                 >
                   {e.checked ? "V" : "X"}
                 </span>
-              </div>
+
+                <span
+                  onClick={() => handleDelete(elem)}
+                  className="cursor-pointer"
+                >
+                  x
+                </span>
+              </Col>
             ))}
           </div>
         ))}

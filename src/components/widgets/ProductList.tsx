@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import {
-  useDeleteAllMutation,
-  useDeleteProductMutation,
+  // useDeleteAllMutation,
+  // useDeleteProductMutation,
   // useLazyGetProductsQuery,
   useLazyGetProductsWithFilterQuery,
   useUpdateProductMutation,
 } from "../../store/supabase/supabase.api";
-import Button from "../ui/Button";
+// import Button from "../ui/Button";
 import styled from "styled-components";
 
 const Col = styled.div`
   display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: 1fr 50px;
 `;
 
 const ProductList = () => {
   const [getProducts, { data = [] }] = useLazyGetProductsWithFilterQuery({});
   const [fetchUpdate] = useUpdateProductMutation();
-  const [fetchDelete] = useDeleteProductMutation();
-  const [fetchDeleteAll] = useDeleteAllMutation();
+  // const [fetchDelete] = useDeleteProductMutation();
+  // const [fetchDeleteAll] = useDeleteAllMutation();
 
   useEffect(() => {
     getProducts({});
@@ -75,7 +75,7 @@ const ProductList = () => {
         <Col className="w-[100%] border-b mb-2 p-2">
           <span onClick={paste}>Product</span>
           <span>Status</span>
-          {/*<span></span>*/}
+          <span></span>
         </Col>
 
         {data?.map((elem) => (
@@ -99,22 +99,11 @@ const ProductList = () => {
             </span>
 
             {/*<span onClick={() => handleDelete(elem)} className="cursor-pointer">*/}
-            {/*  delete*/}
+            {/*  x*/}
             {/*</span>*/}
           </Col>
         ))}
       </ul>
-
-      {/*{!!data.length && (*/}
-      {/*  <div className="flex justify-center h-[50px]">*/}
-      {/*    <Button*/}
-      {/*      value={data?.length}*/}
-      {/*      handlerButton={handlerDeleteAll}*/}
-      {/*      name={"Delete all"}*/}
-      {/*      size="m"*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </div>
   );
 };
