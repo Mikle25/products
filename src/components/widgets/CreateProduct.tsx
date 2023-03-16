@@ -13,7 +13,7 @@ const CreateProduct = () => {
 
   const handler = async () => {
     try {
-      await fetch({ product: value, checked: false });
+      await fetch({ product: value.toLocaleLowerCase(), checked: false });
       getProducts({});
     } catch (e) {
       console.error(e);
@@ -32,7 +32,7 @@ const CreateProduct = () => {
       >
         <Input value={value} handleChange={setValue} />
 
-        <Button type="submit" value={value} name="Send" size="s" />
+        <Button type="submit" value={value} name="Send" size="m" />
       </form>
     </div>
   );

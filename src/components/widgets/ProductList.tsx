@@ -61,19 +61,11 @@ const ProductList = () => {
   //   }
   // };
 
-  const copy = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
-
-  const paste = () => {
-    navigator.clipboard.readText().then((e) => console.log(e));
-  };
-
   return (
     <div className="flex self-center w-[100%] flex-col gap-10">
       <ul>
         <Col className="w-[100%] border-b mb-2 p-2">
-          <span onClick={paste}>Product</span>
+          <span>Product</span>
           <span>Status</span>
           <span></span>
         </Col>
@@ -82,16 +74,14 @@ const ProductList = () => {
           <Col
             key={elem.id}
             className={`w-[100%] border-b p-2 ${
-              elem.checked ? "bg-green-300" : undefined
+              elem.checked ? "bg-green-300 text-black" : undefined
             }`}
           >
-            <span className="uppercase" onClick={() => copy(elem.product)}>
-              {elem.product}
-            </span>
+            <span className="uppercase">{elem.product}</span>
 
             <span
               className={`${
-                elem.checked ? "text-green-500" : "text-red-600"
+                elem.checked ? "text-green-00" : "text-red-600"
               } cursor-pointer`}
               onClick={() => handleChecked(elem.id, elem.checked)}
             >

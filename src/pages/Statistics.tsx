@@ -58,7 +58,6 @@ const Statistics = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      Statistics Page
       <ul>
         <Col className="w-[100%] border-b mb-2 p-2">
           <span>Product</span>
@@ -66,26 +65,26 @@ const Statistics = () => {
           <span></span>
         </Col>
 
-        {Object.entries(formatData).map((elem) => (
-          <div>
-            <div className="underline">{elem[0]}</div>
+        {Object.entries(formatData).map((elem, i) => (
+          <div key={i}>
+            <div className="underline text-cyan-400">{elem[0]}</div>
             {elem[1].map((e) => (
               <Col
                 key={e.id}
                 className={`w-[100%]  border-b p-2 ${
-                  e.checked ? "bg-green-300" : undefined
+                  e.checked ? "bg-green-300 text-black" : undefined
                 }`}
               >
                 <span className="uppercase">{e.product}</span>
 
                 <span
-                  className={`${e.checked ? "text-green-500" : "text-red-600"}`}
+                  className={`${e.checked ? "text-green-800" : "text-red-600"}`}
                 >
                   {e.checked ? "V" : "X"}
                 </span>
 
                 <span
-                  onClick={() => handleDelete(elem)}
+                  onClick={() => handleDelete(e)}
                   className="cursor-pointer"
                 >
                   x

@@ -15,11 +15,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const CustomButton = styled.button<TStyleButtonProps>`
-  color: ${({ theme }) => theme.colors.primaryDefaultButton};
+  //color: ${({ theme }) => theme.colors.primaryDefaultButton};
   background-color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.defaultGrey : theme.colors.defaultErrorText};
+    disabled ? theme.colors.primaryDefaultButton : theme.colors.defaultErrorText};
   width: ${({ theme, size }) => theme.size.button[size]};
   height: 100%;
+  border-radius: 5px;
 `;
 
 const Button: FC<ButtonProps> = ({

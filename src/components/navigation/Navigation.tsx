@@ -4,13 +4,13 @@ import { routers } from "../../router";
 
 const Navigation = () => {
   return (
-    <nav className="flex gap-4 items-center">
+    <nav className="flex gap-4 items-center text-white">
       {routers.map((elem) => (
         <NavLink
           key={elem.name}
           to={elem.path}
           className={({ isActive }) =>
-            isActive ? "text-indigo-700" : undefined
+            isActive ? "text-cyan-100" : undefined
           }
         >
           {elem.name}

@@ -1,7 +1,7 @@
 const size = {
   button: {
     s: "50px",
-    m: "100px",
+    m: "75px",
     lg: "150px",
   },
 };

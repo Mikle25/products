@@ -4,7 +4,7 @@ import ProductList from "../components/widgets/ProductList";
 
 const Products = () => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-5">
       <CreateProduct />
 
       <ProductList />

@@ -9,7 +9,7 @@ const Input: FC<IInputProps> = ({value, handleChange}) => {
   return (
     <input
       type="text"
-      className="border p-2"
+      className="border p-2 bg-transparent border-radius"
       onChange={(e) => handleChange(e.target.value)}
       value={value}
       placeholder="Enter product name"
