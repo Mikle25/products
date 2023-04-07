@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   deleteAll,
   deleteProduct,
+  editProduct,
   setProduct,
   TProduct,
   updateStatusProduct,
@@ -71,6 +72,13 @@ export const supabaseApi = createApi({
         return { ...resp };
       },
     }),
+    editProduct: build.mutation({
+      queryFn: async (arg): Promise<any> => {
+        const resp = await editProduct(arg);
+
+        return { ...resp };
+      },
+    }),
   }),
 });
 
@@ -81,4 +89,5 @@ export const {
   useDeleteProductMutation,
   useDeleteAllMutation,
   useLazyGetProductsWithFilterQuery,
+  useEditProductMutation,
 } = supabaseApi;

@@ -1,16 +1,18 @@
 import React, { FC } from "react";
 
 type IInputProps = {
-  value: string;
+  value?: string;
   handleChange: (value: string) => void;
 };
 
-const Input: FC<IInputProps> = ({value, handleChange}) => {
+const Input: FC<IInputProps> = ({ value, handleChange }) => {
   return (
     <input
       type="text"
       className="border p-2 bg-transparent border-radius"
-      onChange={(e) => handleChange(e.target.value)}
+      onChange={(e) => {
+        handleChange(e.target.value);
+      }}
       value={value}
       placeholder="Enter product name"
       // autoFocus={true}

@@ -32,7 +32,7 @@ const CreateProduct = () => {
       >
         <Input value={value} handleChange={setValue} />
 
-        <Button type="submit" value={value} name="Send" size="m" />
+        <Button type="submit" disabled={!value} name="Send" size="m" />
       </form>
     </div>
   );

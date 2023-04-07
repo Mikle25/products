@@ -41,3 +41,12 @@ export const deleteAll = async (arg: number[]) => {
 
   return { ...resp };
 };
+
+export const editProduct = async (arg: Partial<TProduct>) => {
+  const resp = await supabase
+    .from(TABLE.products)
+    .update([arg])
+    .eq("id", arg.id);
+
+  return { ...resp };
+};
