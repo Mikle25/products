@@ -6,6 +6,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    height: 100vh;
+    padding-bottom: 20px;
     color: white;
     background: rgba(0, 0, 0, 0.8);
   }
