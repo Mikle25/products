@@ -2,6 +2,7 @@ import Statistics from "../pages/Statistics";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Products from "../pages/Products";
 import { FC, ReactNode } from "react";
+import CurrentRate from "../pages/CurrentRate";
 
 export const routers = [
   {
@@ -13,6 +14,11 @@ export const routers = [
     name: "Statistics",
     path: "/statistics",
     page: <Statistics />,
+  },
+  {
+    name: "Current rate",
+    path: "/current-rate",
+    page: <CurrentRate />,
   },
 ];
 
