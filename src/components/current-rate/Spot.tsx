@@ -24,10 +24,18 @@ export const Spot = () => {
 
   useEffect(() => {
     fetch(activeCurrency.key);
-  }, []);
+
+    const interval = setInterval(() => {
+      fetch(activeCurrency.key);
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeCurrency]);
 
   const handleGetCurrentRate = (arg: any) => {
-    fetch(arg.key);
+    // fetch(arg.key);
     setActiveCurrency(arg);
   };
 
@@ -55,7 +63,7 @@ export const Spot = () => {
           <SkeletonStyle h="30px" w="200px" />
         ) : (
           <div>
-            {activeCurrency.name}: {formatDecimals(data?.price)}$
+            {activeCurrency.name}: {formatDecimals(data?.price || 0)}$
           </div>
         )}
       </div>
