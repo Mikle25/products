@@ -32,9 +32,9 @@ const ProductList = () => {
   return (
     <div className="flex self-center w-[100%] flex-col gap-10">
       <ul>
-        <Col className="w-[100%] border-b mb-2 p-2">
-          <span>Product</span>
-          <span>Status</span>
+        <Col className="w-[100%] border-b p-2">
+          <span>Продукты</span>
+          <span>Статус</span>
         </Col>
 
         {data?.map((elem) => (

@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, FC, MouseEventHandler } from "react";
 import styled from "styled-components";
 
-type TSize = "s" | "m";
+type TSize = "s" | "m" | 'l';
 
 type TStyleButtonProps = {
   size: TSize;

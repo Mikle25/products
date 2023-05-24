@@ -60,8 +60,8 @@ const Statistics = () => {
     <div className="flex flex-col gap-10">
       <ul>
         <Col className="w-[100%] border-b mb-2 p-2">
-          <span>Product</span>
-          <span>Status</span>
+          <span>Продукты</span>
+          <span>Статус</span>
           <span></span>
         </Col>
 
@@ -72,16 +72,12 @@ const Statistics = () => {
               <Col
                 key={e.id}
                 className={`w-[100%]  border-b p-2 ${
-                  e.checked ? "bg-green-300 text-black" : undefined
+                  e.checked ? "bg-green-200 text-black" : undefined
                 }`}
               >
                 <span className="uppercase">{e.product}</span>
 
-                <span
-                  className={`${e.checked ? "text-green-800" : "text-red-600"}`}
-                >
-                  {e.checked ? "V" : "X"}
-                </span>
+                <span>{e.checked ? "✅" : "❌"}</span>
 
                 {/*<span*/}
                 {/*  onClick={() => handleDelete(e)}*/}

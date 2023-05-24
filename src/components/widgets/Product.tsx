@@ -15,12 +15,12 @@ export const Product: FC<ProductProps> = ({ elem, handleChecked }) => {
   return (
     <Col
       key={elem.id}
-      className={`w-[100%] border-b p-2 ${
-        elem.checked ? "bg-green-300 text-black" : undefined
+      className={`cursor-pointer w-[100%] border-b p-2 ${
+        elem.checked ? "bg-green-200" : "hover:bg-gray-50/10"
       }`}
     >
       <span
-        className="uppercase"
+        className={`uppercase ${elem.checked ? "text-black" : undefined}`}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -37,12 +37,10 @@ export const Product: FC<ProductProps> = ({ elem, handleChecked }) => {
       />
 
       <span
-        className={`${
-          elem.checked ? "text-green-00" : "text-red-600"
-        } cursor-pointer`}
+        className={`cursor-pointer`}
         onClick={() => handleChecked(elem.id, elem.checked)}
       >
-        {elem.checked ? "V" : "X"}
+        {elem.checked ? "✅" : "❌"}
       </span>
       {/*<span onClick={() => handleDelete(elem)} className="cursor-pointer">*/}
       {/*  x*/}

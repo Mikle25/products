@@ -14,7 +14,7 @@ const Input: FC<IInputProps> = ({ value, handleChange, ...rest }) => {
         handleChange(e.target.value);
       }}
       value={value}
-      placeholder="Enter product name"
+      placeholder="Название продукта"
       // autoFocus={true}
       {...rest}
     />
