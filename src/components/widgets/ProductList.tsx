@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   useLazyGetProductsWithFilterQuery,
   useUpdateProductMutation,
@@ -20,14 +20,14 @@ const ProductList = () => {
     return () => clearInterval(getProduct);
   }, []);
 
-  const handleChecked = async (id: number, check: boolean) => {
+  const handleChecked = useCallback(async (id: number, check: boolean) => {
     try {
       await fetchUpdate({ id, checked: !check });
       getProducts({});
     } catch (e) {
       console.error(e);
     }
-  };
+  }, []);
 
   return (
     <div className="flex self-center w-[100%] flex-col gap-10">
@@ -35,7 +35,6 @@ const ProductList = () => {
         <Col className="w-[100%] border-b mb-2 p-2">
           <span>Product</span>
           <span>Status</span>
-          <span></span>
         </Col>
 
         {data?.map((elem) => (

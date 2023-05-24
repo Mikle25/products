@@ -5,7 +5,7 @@ type IInputProps = {
   handleChange: (value: string) => void;
 };
 
-const Input: FC<IInputProps> = ({ value, handleChange }) => {
+const Input: FC<IInputProps> = ({ value, handleChange, ...rest }) => {
   return (
     <input
       type="text"
@@ -16,6 +16,7 @@ const Input: FC<IInputProps> = ({ value, handleChange }) => {
       value={value}
       placeholder="Enter product name"
       // autoFocus={true}
+      {...rest}
     />
   );
 };

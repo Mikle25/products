@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import {
@@ -38,4 +38,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default memo(CreateProduct);
