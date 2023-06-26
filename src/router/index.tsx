@@ -1,4 +1,3 @@
-import Statistics from "../pages/Statistics";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Products from "../pages/Products";
 import { FC, ReactNode } from "react";
@@ -9,11 +8,6 @@ export const routers = [
     name: "Products",
     path: "/products",
     page: <Products />,
-  },
-  {
-    name: "Statistics",
-    path: "/statistics",
-    page: <Statistics />,
   },
   {
     name: "Current rate",

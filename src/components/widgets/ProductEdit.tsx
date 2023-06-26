@@ -3,9 +3,8 @@ import Input from "../ui/Input";
 import { IProduct } from "../../modules";
 import Button from "../ui/Button";
 import {
-  useDeleteProductMutation,
   useEditProductMutation,
-  useLazyGetProductsWithFilterQuery,
+  useLazyGetProductsQuery,
 } from "../../store/supabase/supabase.api";
 
 interface ProductEditProps {
@@ -15,14 +14,10 @@ interface ProductEditProps {
 
 export const ProductEdit: FC<ProductEditProps> = memo(
   ({ elem, handleClose }) => {
-    const [value, setValue] = useState("");
-    // const ref = useRef("");
-    // const { debounce } = useDebounce(ref.current);
-    const [confirmDeletion, setConfirmDeletion] = useState(false);
+    const [value, setValue] = useState(elem.product);
     const [fetchEditProduct] = useEditProductMutation();
-    const [fetchDelete] = useDeleteProductMutation();
 
-    const [getProducts] = useLazyGetProductsWithFilterQuery({});
+    const [getProducts] = useLazyGetProductsQuery({});
 
     const handleEdit = async () => {
       try {
@@ -36,15 +31,6 @@ export const ProductEdit: FC<ProductEditProps> = memo(
         console.error(e);
       } finally {
         // setValue("");
-      }
-    };
-
-    const handleDelete = async () => {
-      try {
-        await fetchDelete(elem);
-        getProducts({});
-      } catch (e) {
-        console.error(e);
       }
     };
 
@@ -63,26 +49,9 @@ export const ProductEdit: FC<ProductEditProps> = memo(
           }}
         />
 
-        <label className="flex gap-1">
-          <input
-            type="checkbox"
-            name="confirm-deletion"
-            checked={confirmDeletion}
-            onChange={(e) => {
-              setConfirmDeletion(e.target.checked);
-            }}
-          />
-          <span>Confirm deletion</span>
-        </label>
-
         <div className="flex justify-center gap-10 h-[40px]">
-          <Button type="submit" name="Edit" disabled={!value} />
-          <Button
-            name="Delete"
-            handlerButton={handleDelete}
-            disabled={!confirmDeletion}
-          />
-          <Button name="Close" handlerButton={handleClose} />
+          <Button type="submit" name="Edit" size="m" disabled={!value} />
+          <Button name="Close" handlerButton={handleClose} size="m" />
         </div>
       </form>
     );

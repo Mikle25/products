@@ -1,45 +1,45 @@
-import React, { ButtonHTMLAttributes, FC, MouseEventHandler } from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
+import { Component } from "../../modules/components";
 
-type TSize = "s" | "m" | 'l';
+type TSize = "s" | "m" | "l" | undefined;
 
 type TStyleButtonProps = {
   size: TSize;
-  disabled: boolean;
 };
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  handlerButton?: MouseEventHandler<HTMLButtonElement>;
-  name: string;
-  size?: TSize;
-  disabled?: boolean;
-}
+type ButtonComponent = Component<
+  "button",
+  {
+    handlerButton?: MouseEventHandler<HTMLButtonElement>;
+    name: string;
+    size?: TSize;
+  }
+>;
 
 const CustomButton = styled.button<TStyleButtonProps>`
   //color: ${({ theme }) => theme.colors.primaryDefaultButton};
-  background-color: ${({ theme, disabled }) =>
-    disabled
-      ? theme.colors.defaultErrorText
-      : theme.colors.primaryDefaultButton};
-  width: ${({ theme, size }) => theme.size.button[size]};
+  background-color: ${({ theme }) => theme.colors.primaryDefaultButton};
+  width: ${({ theme, size }) =>
+    size ? theme.size.button[size] : "fit-content"};
   height: 100%;
+  padding: 0 5px;
   border-radius: 5px;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.defaultGrey};
+    cursor: not-allowed;
+  }
 `;
 
-const Button: FC<ButtonProps> = ({
+const Button: ButtonComponent = ({
   handlerButton,
   name,
-  type = "button",
-  size = "m",
-  disabled = false,
+  size,
+  ...rest
 }) => {
   return (
-    <CustomButton
-      size={size}
-      type={type}
-      onClick={handlerButton}
-      disabled={disabled}
-    >
+    <CustomButton size={size} onClick={handlerButton} {...rest}>
       {name}
     </CustomButton>
   );

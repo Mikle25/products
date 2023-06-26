@@ -7,10 +7,16 @@ import { ProductEdit } from "./ProductEdit";
 interface ProductProps {
   elem: IProduct;
   handleChecked: (id: number, isChecked: boolean) => void;
+  handlerSelectElem: (elem: any, checked: boolean) => void;
 }
 
-export const Product: FC<ProductProps> = ({ elem, handleChecked }) => {
+export const Product: FC<ProductProps> = ({
+  elem,
+  handleChecked,
+  handlerSelectElem,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   return (
     <Col
@@ -19,6 +25,15 @@ export const Product: FC<ProductProps> = ({ elem, handleChecked }) => {
         elem.checked ? "bg-green-200" : "hover:bg-gray-50/10"
       }`}
     >
+      <input
+        type="checkbox"
+        className="w-[20px] h-[20px]"
+        checked={checked}
+        onChange={(e) => {
+          setChecked(e.target.checked);
+          handlerSelectElem(elem, e.target.checked);
+        }}
+      />
       <span
         className={`uppercase ${elem.checked ? "text-black" : undefined}`}
         onClick={() => {
@@ -42,9 +57,6 @@ export const Product: FC<ProductProps> = ({ elem, handleChecked }) => {
       >
         {elem.checked ? "✅" : "❌"}
       </span>
-      {/*<span onClick={() => handleDelete(elem)} className="cursor-pointer">*/}
-      {/*  x*/}
-      {/*</span>*/}
     </Col>
   );
 };

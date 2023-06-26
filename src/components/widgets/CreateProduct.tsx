@@ -2,12 +2,12 @@ import React, { memo, useState } from "react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import {
-  useLazyGetProductsWithFilterQuery,
+  useLazyGetProductsQuery,
   useSetProductMutation,
 } from "../../store/supabase/supabase.api";
 
 const CreateProduct = () => {
-  const [getProducts] = useLazyGetProductsWithFilterQuery();
+  const [getProducts] = useLazyGetProductsQuery();
   const [value, setValue] = useState("");
   const [fetch] = useSetProductMutation();
 
