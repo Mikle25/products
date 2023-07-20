@@ -42,6 +42,8 @@ const ProductList = () => {
       await fetchDeleteAll(checkedElem);
 
       getProducts({});
+
+      setCheckedElem([]);
     } catch (e) {
       console.error(e);
     }
