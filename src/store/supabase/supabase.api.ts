@@ -26,6 +26,7 @@ export const supabaseApi = createApi({
         const resp = await supabase
           .from(TABLE.products)
           .select()
+          .order("checked", { ascending: true })
           .order("date", { ascending: false });
 
         return { ...resp };

@@ -57,6 +57,18 @@ const ProductList = () => {
     }
   };
 
+  const handlerAllCheckedFalse = () => {
+    data.forEach(async (elem) => {
+      try {
+        await fetchUpdate({ id: elem.id, checked: false });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        getProducts({});
+      }
+    });
+  };
+
   return (
     <div className="flex self-center w-[100%] flex-col gap-10">
       <ul>
@@ -77,11 +89,16 @@ const ProductList = () => {
       </ul>
 
       {!!data.length && (
-        <div className="flex justify-center h-[50px]">
+        <div className="flex gap-[10px] justify-center h-[50px]">
           <Button
             handlerButton={handlerDeleteAll}
             name={"Удалить выбранные продукты"}
             disabled={!checkedElem.length}
+          />
+
+          <Button
+            name={"Убрать статус"}
+            onClick={() => handlerAllCheckedFalse()}
           />
         </div>
       )}

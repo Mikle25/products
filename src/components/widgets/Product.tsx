@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { Col } from "../styles/Col";
 import { Modal } from "../ui/Modal";
 import { IProduct } from "../../modules";
