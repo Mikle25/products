@@ -4,16 +4,31 @@ import {
   useLazyGetProductsQuery,
   useUpdateProductMutation,
 } from "../../store/supabase/supabase.api";
-import { Col } from "../styles/Col";
-import { Product } from "./Product";
-import Button from "../ui/Button";
 import { IProduct } from "../../modules";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  Flex,
+  Grid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { ProductEdit } from "./ProductEdit";
 
 const ProductList = () => {
   const [fetchDeleteAll] = useDeleteAllMutation();
   const [getProducts, { data = [] }] = useLazyGetProductsQuery({});
   const [fetchUpdate] = useUpdateProductMutation();
   const [checkedElem, setCheckedElem] = useState<number[]>([]);
+  const [activeElem, setActiveElem] = useState<IProduct | null | undefined>();
+
+  console.log("checkedElem", checkedElem);
+
+  const handleClose = useCallback(() => {
+    setActiveElem(null);
+  }, []);
 
   useEffect(() => {
     getProducts({});
@@ -50,10 +65,10 @@ const ProductList = () => {
   };
 
   const handlerSelectElem = (elem: IProduct, checked: boolean) => {
-    if (checked) {
+    if (checked && !checkedElem.includes(elem.id)) {
       setCheckedElem([...checkedElem, elem.id]);
-    } else if (!checked) {
-      setCheckedElem((product) => product.filter((_, index) => index !== 0));
+    } else if (!checked && checkedElem.includes(elem.id)) {
+      setCheckedElem((product) => product.filter((el) => el !== elem.id));
     }
   };
 
@@ -69,40 +84,136 @@ const ProductList = () => {
     });
   };
 
-  return (
-    <div className="flex self-center w-[100%] flex-col gap-10">
-      <ul>
-        <Col className="w-[100%] border-b p-2">
-          <span> </span>
-          <span>Продукты</span>
-          <span>Статус</span>
-        </Col>
+  const columns: {
+    key: string;
+    process: (row: IProduct) => React.ReactNode;
+  }[] = [
+    {
+      key: "product",
+      process: (row) => (
+        <Flex w="fit-content" alignItems="center" gap="5px">
+          <Flex alignItems="center" onClick={(e) => e.stopPropagation()}>
+            <Checkbox
+              isChecked={checkedElem.includes(row.id)}
+              onChange={(e) => {
+                handlerSelectElem(row, e.target.checked);
+              }}
+            />
+          </Flex>
 
-        {data?.map((elem) => (
-          <Product
-            key={elem.id}
-            elem={elem}
-            handleChecked={handleChecked}
-            handlerSelectElem={handlerSelectElem}
-          />
-        ))}
-      </ul>
+          {row?.product}
+        </Flex>
+      ),
+    },
+    {
+      key: "status",
+      process: (row) => (
+        <Box
+          _hover={{ cursor: "pointer" }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleChecked(row.id, row.checked);
+          }}
+        >
+          {row.checked ? "✅" : "❌"}
+        </Box>
+      ),
+    },
+  ];
+
+  return (
+    <Stack spacing="20px" w="100%" alignItems="center">
+      <Flex flexDir="column" w="100%" justifyContent="center">
+        <Grid
+          templateColumns="1fr auto"
+          w="100%"
+          alignItems="center"
+          justifyContent="space-between"
+          p="0 16px"
+        >
+          {columns.map((el) => (
+            <Text
+              key={el.key}
+              textTransform="capitalize"
+              fontWeight="500"
+              color="cyan.500"
+            >
+              {el.key}
+            </Text>
+          ))}
+        </Grid>
+
+        <Divider />
+
+        {data?.map((elem, i) => {
+          if (i === data.length - 1) {
+            return (
+              <Grid
+                templateColumns="1fr auto"
+                w="100%"
+                alignItems="center"
+                justifyContent="space-between"
+                p="0 16px"
+                h="40px"
+                _hover={{ bg: "rgba(255, 255, 255, 0.05)", cursor: "pointer" }}
+                onClick={(e) => {
+                  // e.stopPropagation();
+                  setActiveElem(elem);
+                }}
+              >
+                {columns.map((el) => el?.process(elem))}
+              </Grid>
+            );
+          }
+          return (
+            <>
+              <Grid
+                templateColumns="1fr auto"
+                w="100%"
+                alignItems="center"
+                justifyContent="space-between"
+                p="0 16px"
+                h="40px"
+                _hover={{ bg: "rgba(255, 255, 255, 0.05)", cursor: "pointer" }}
+                onClick={(e) => {
+                  // e.stopPropagation();
+                  setActiveElem(elem);
+                }}
+              >
+                {columns.map((el) => el?.process(elem))}
+              </Grid>
+              <Divider />
+            </>
+          );
+        })}
+      </Flex>
 
       {!!data.length && (
-        <div className="flex gap-[10px] justify-center h-[50px]">
+        <Flex gap="10px">
           <Button
-            handlerButton={handlerDeleteAll}
-            name={"Удалить выбранные продукты"}
+            onClick={handlerDeleteAll}
             disabled={!checkedElem.length}
-          />
+            colorScheme="blue"
+          >
+            Remove select product
+          </Button>
 
           <Button
             name={"Убрать статус"}
-            onClick={() => handlerAllCheckedFalse()}
-          />
-        </div>
+            onClick={handlerAllCheckedFalse}
+            colorScheme="cyan"
+          >
+            Remove status
+          </Button>
+        </Flex>
       )}
-    </div>
+
+      <ProductEdit
+        elem={activeElem}
+        isOpen={!!activeElem}
+        handleClose={handleClose}
+      />
+    </Stack>
   );
 };
 

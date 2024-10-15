@@ -1,10 +1,10 @@
 import React, { memo, useState } from "react";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
+
 import {
   useLazyGetProductsQuery,
   useSetProductMutation,
 } from "../../store/supabase/supabase.api";
+import { Button, Flex, Input } from "@chakra-ui/react";
 
 const CreateProduct = () => {
   const [getProducts] = useLazyGetProductsQuery();
@@ -22,19 +22,29 @@ const CreateProduct = () => {
     }
   };
   return (
-    <div className="flex justify-center">
-      <form
-        className="flex gap-5"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handler();
-        }}
-      >
-        <Input value={value} handleChange={setValue} />
+    <Flex
+      as="form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handler();
+      }}
+      gap="10px"
+    >
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.currentTarget.value)}
+        minW="300px"
+      />
 
-        <Button type="submit" disabled={!value} name="Добавить" size="l" />
-      </form>
-    </div>
+      <Button
+        variant="solid"
+        type="submit"
+        disabled={!value}
+        colorScheme="teal"
+      >
+        Add
+      </Button>
+    </Flex>
   );
 };
 

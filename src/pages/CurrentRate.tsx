@@ -18,9 +18,7 @@ const tabs: ITabsProps[] = [
 const CurrentRate = () => {
   const { activeTab, handleActiveTab } = UseTabs(tabs);
   return (
-    <div>
-      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={handleActiveTab} />
-    </div>
+    <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={handleActiveTab} />
   );
 };
 

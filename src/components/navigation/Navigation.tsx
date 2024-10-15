@@ -1,22 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { routers } from "../../router";
+import { Flex } from "@chakra-ui/react";
 
 const Navigation = () => {
   return (
-    <nav className="flex gap-4 items-center text-white">
+    <Flex gap="20px" alignItems="center">
       {routers.map((elem) => (
-        <NavLink
+        <Flex
+          as={NavLink}
           key={elem.name}
           to={elem.path}
-          className={({ isActive }) =>
-            isActive ? "text-cyan-100" : undefined
-          }
+          fontWeight="600"
+          textTransform="uppercase"
+          _activeLink={{ color: "teal.300", textDecor: "underline" }}
         >
           {elem.name}
-        </NavLink>
+        </Flex>
       ))}
-    </nav>
+    </Flex>
   );
 };
 

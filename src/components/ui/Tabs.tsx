@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { ITabsProps } from "../../modules";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 
 type TabsProps<T> = {
   tabs: T[];
@@ -13,38 +14,20 @@ export const Tabs: FC<TabsProps<ITabsProps>> = ({
   activeTab,
 }) => {
   return (
-    <>
-      <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
-        <ul
-          className="flex flex-wrap -mb-px text-sm font-medium text-center"
-          id="myTab"
-          data-tabs-toggle="#myTabContent"
-          role="tablist"
-        >
-          {tabs.map((tab) => (
-            <li key={tab.key} className="mr-2" role="presentation">
-              <button
-                className={`inline-block uppercase p-4 rounded-t-lg ${
-                  tab.key === activeTab.key
-                    ? "text-cyan-400 border-b-cyan-400 border-b-2"
-                    : null
-                }`}
-                id="profile-tab"
-                data-tabs-target="#profile"
-                type="button"
-                role="tab"
-                aria-controls="profile"
-                aria-selected="false"
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab.key}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <Stack spacing="10px" w="100%">
+      <Flex w="100%" gap="10px" justifyContent="space-between">
+        {tabs.map((tab) => (
+          <Button
+            w="100%"
+            onClick={() => setActiveTab(tab)}
+            colorScheme={tab.key === activeTab.key ? "cyan" : "gray"}
+          >
+            {tab.key}
+          </Button>
+        ))}
+      </Flex>
 
       {activeTab.component}
-    </>
+    </Stack>
   );
 };

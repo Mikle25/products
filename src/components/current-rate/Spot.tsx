@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLazyGetSpotPriceQuery } from "../../store/binance/binance.api";
-import { SkeletonStyle } from "../styles/Skeleton";
 import { formatDecimals } from "../../utils/helpers";
+import { Button, Flex, Heading, Skeleton } from "@chakra-ui/react";
 
 const listOfCurrency = [
   {
@@ -40,33 +40,25 @@ export const Spot = () => {
   };
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-2">
+    <Flex flexDir="column" gap="10px" alignItems="center">
+      <Flex
+        alignItems="center"
+        gap="10px"
+        justifyContent={{ base: "space-between", md: "center" }}
+        w="100%"
+      >
         {listOfCurrency.map((currency) => (
-          <div key={currency.key}>
-            <button
-              className={`${
-                activeCurrency.key === currency.key ? "text-cyan-400" : null
-              }`}
-              onClick={() => handleGetCurrentRate(currency)}
-            >
-              {currency.name}
-            </button>
-          </div>
+          <Button
+            key={currency.key}
+            onClick={() => handleGetCurrentRate(currency)}
+            colorScheme={activeCurrency.key === currency.key ? "cyan" : "gray"}
+          >
+            {currency.name}
+          </Button>
         ))}
-      </div>
+      </Flex>
 
-      <div>
-        <h2>Current rate:</h2>
-
-        {isFetching ? (
-          <SkeletonStyle h="30px" w="200px" />
-        ) : (
-          <div>
-            {activeCurrency.name}: {formatDecimals(data?.price || 0)}$
-          </div>
-        )}
-      </div>
-    </div>
+      <Heading>Current rate: {formatDecimals(data?.price || 0)}$</Heading>
+    </Flex>
   );
 };

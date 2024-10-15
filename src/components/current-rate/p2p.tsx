@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useGetP2PPriceMutation } from "../../store/binance/binance.api";
-import { SkeletonStyle } from "../styles/Skeleton";
+import { Button, Flex, Grid, Skeleton, Text } from "@chakra-ui/react";
 
 export const P2P = () => {
   const [fetch, { data, isSuccess }] = useGetP2PPriceMutation();
@@ -14,22 +14,27 @@ export const P2P = () => {
   };
 
   return (
-    <>
-      <button className='mb-5 text-cyan-400 border-cyan-400' onClick={handleReload}>Reload</button>
-
+    <Flex flexDir="column" gap="10px" alignItems="center">
       {isSuccess ? (
-        data?.map((elem, i) => (
-          <div key={i}>
-            <span>{elem.advertiser.nickName}: </span>
-            <span>
-              {elem.adv.price}
-              {elem.adv.fiatSymbol}
-            </span>
-          </div>
+        data?.map((elem) => (
+          <Grid
+            key={elem.adv.fiatSymbol}
+            templateColumns={{ base: "1fr auto", md: "300px auto" }}
+            gap="10px"
+          >
+            <Text>{elem.advertiser.nickName}:</Text>
+            <Text fontWeight="600">
+              {elem.adv.price} {elem.adv.fiatSymbol}
+            </Text>
+          </Grid>
         ))
       ) : (
-        <SkeletonStyle h="30px" w="200px" />
+        <Skeleton h="30px" w="200px" />
       )}
-    </>
+
+      <Button onClick={handleReload} w={{ base: "100%", md: "fit-content" }}>
+        Reload
+      </Button>
+    </Flex>
   );
 };

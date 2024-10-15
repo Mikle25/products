@@ -1,20 +1,31 @@
 import React, { FC, memo, useState } from "react";
-import Input from "../ui/Input";
 import { IProduct } from "../../modules";
-import Button from "../ui/Button";
 import {
   useEditProductMutation,
   useLazyGetProductsQuery,
 } from "../../store/supabase/supabase.api";
+import {
+  Button,
+  Flex,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
 
 interface ProductEditProps {
-  elem: IProduct;
+  elem: IProduct | null | undefined;
+  isOpen: boolean;
   handleClose: () => void;
 }
 
 export const ProductEdit: FC<ProductEditProps> = memo(
-  ({ elem, handleClose }) => {
-    const [value, setValue] = useState(elem.product);
+  ({ elem, isOpen, handleClose }) => {
+    const [value, setValue] = useState<string>();
     const [fetchEditProduct] = useEditProductMutation();
 
     const [getProducts] = useLazyGetProductsQuery({});
@@ -22,8 +33,8 @@ export const ProductEdit: FC<ProductEditProps> = memo(
     const handleEdit = async () => {
       try {
         await fetchEditProduct({
-          product: value.toLocaleLowerCase(),
-          id: elem.id,
+          product: value?.toLocaleLowerCase(),
+          id: elem?.id,
         });
         getProducts({});
         handleClose();
@@ -35,25 +46,42 @@ export const ProductEdit: FC<ProductEditProps> = memo(
     };
 
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleEdit();
-        }}
-        className="flex flex-col gap-10 mt-5"
-      >
-        <Input
-          value={value}
-          handleChange={(e) => {
-            setValue(e);
-          }}
-        />
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex
+              as="form"
+              flexDir="column"
+              alignItems="center"
+              gap="10px"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleEdit();
+              }}
+            >
+              <Input
+                defaultValue={elem?.product}
+                value={value}
+                onChange={(e) => {
+                  setValue(e.currentTarget.value);
+                }}
+              />
 
-        <div className="flex justify-center gap-10 h-[40px]">
-          <Button type="submit" name="Edit" size="m" disabled={!value} />
-          <Button name="Close" handlerButton={handleClose} size="m" />
-        </div>
-      </form>
+              <Flex alignItems="center" gap="10px">
+                <Button type="submit" disabled={!value} colorScheme="green">
+                  Edit
+                </Button>
+                <Button onClick={handleClose} colorScheme="gray">
+                  Close
+                </Button>
+              </Flex>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     );
   }
 );

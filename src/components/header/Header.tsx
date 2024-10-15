@@ -1,13 +1,18 @@
 import React from "react";
 import Navigation from "../navigation";
-// import { Login } from "../auth/Auth";
+import { Flex, Stack } from "@chakra-ui/react";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center gap-20 px-2 py-5 bg-gray-800">
+    <Stack
+      height="50px"
+      alignItems="center"
+      justifyContent="center"
+      color=""
+      bgImage="linear-gradient(to-r, cyan.600, blue.900, cyan.600)"
+    >
       <Navigation />
-      {/*<Login />*/}
-    </div>
+    </Stack>
   );
 };
 

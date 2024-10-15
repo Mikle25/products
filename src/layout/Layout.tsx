@@ -1,7 +1,16 @@
+import { Flex, Stack } from "@chakra-ui/react";
 import React, { FC, ReactNode } from "react";
+import Header from "../components/header";
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="p-5">{children}</div>;
+  return (
+    <Stack spacing="20px">
+      <Header />
+      <Flex justifyContent="center" padding="0 16px" w="100%">
+        {children}
+      </Flex>
+    </Stack>
+  );
 };
 
 export default Layout;

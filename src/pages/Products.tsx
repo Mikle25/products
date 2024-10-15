@@ -1,14 +1,15 @@
 import React from "react";
 import CreateProduct from "../components/widgets/CreateProduct";
 import ProductList from "../components/widgets/ProductList";
+import { Stack } from "@chakra-ui/react";
 
 const Products = () => {
   return (
-    <div className="flex flex-col gap-5">
+    <Stack spacing="10px" alignItems="center" w="100%">
       <CreateProduct />
 
       <ProductList />
-    </div>
+    </Stack>
   );
 };
 

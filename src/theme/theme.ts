@@ -1,9 +1,14 @@
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 import colors from "./colors";
-import size from "./size";
+import { global } from "./global";
 
-const vars = {
-  colors,
-  size
+const defaultConfig: ThemeConfig = {
+  initialColorMode: "dark",
+  useSystemColorMode: false,
 };
 
-export default vars;
+export const theme = extendTheme({
+  config: defaultConfig,
+  styles: { global: { ...global } },
+  colors,
+});
