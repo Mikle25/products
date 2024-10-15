@@ -11,9 +11,10 @@ const Navigation = () => {
           as={NavLink}
           key={elem.name}
           to={elem.path}
+          fontSize="24px"
           fontWeight="600"
           textTransform="uppercase"
-          _activeLink={{ color: "teal.300", textDecor: "underline" }}
+          _activeLink={{ bgGradient: "linear(to-l, #0021f8, #9500ff)", bgClip: 'text' }}
         >
           {elem.name}
         </Flex>

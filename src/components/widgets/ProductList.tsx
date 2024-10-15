@@ -89,17 +89,21 @@ const ProductList = () => {
     {
       key: "product",
       process: (row) => (
-        <Flex w="fit-content" alignItems="center" gap="5px">
+        <Flex w="fit-content" alignItems="center" gap="15px">
           <Flex alignItems="center" onClick={(e) => e.stopPropagation()}>
             <Checkbox
+              size="lg"
               isChecked={checkedElem.includes(row.id)}
+              colorScheme="cyan"
               onChange={(e) => {
                 handlerSelectElem(row, e.target.checked);
               }}
             />
           </Flex>
 
-          {row?.product}
+          <Text fontSize="20px" textTransform="capitalize">
+            {row?.product}
+          </Text>
         </Flex>
       ),
     },
@@ -141,7 +145,7 @@ const ProductList = () => {
           ))}
         </Grid>
 
-        <Divider />
+        <Divider borderColor="cyan" />
 
         {data?.map((elem, i) => {
           if (i === data.length - 1) {
