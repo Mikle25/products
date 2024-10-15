@@ -24,8 +24,6 @@ const ProductList = () => {
   const [checkedElem, setCheckedElem] = useState<number[]>([]);
   const [activeElem, setActiveElem] = useState<IProduct | null | undefined>();
 
-  console.log("checkedElem", checkedElem);
-
   const handleClose = useCallback(() => {
     setActiveElem(null);
   }, []);
