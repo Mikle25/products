@@ -14,7 +14,7 @@ export const P2P = () => {
   };
 
   return (
-    <Flex flexDir="column" gap="10px" alignItems="center">
+    <Flex flexDir="column" gap="10px" alignItems={{ base: "", md: "center" }}>
       {isSuccess ? (
         data?.map((elem) => (
           <Grid
